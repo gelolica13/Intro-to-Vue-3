@@ -9,11 +9,37 @@
     <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id="app">
-      <h1>Product goes here</h1>
+    <div id="app" class="flexbox">
+      <div class="product-image">
+        <a :href="imglink"> <img :disabled="!inStock" :class="{'out-of-stock-img': !inStock}" :src="image" alt="" /></a>
+      </div>
+      <div>
+        <div>Cart ({{ cart }})</div>
+        <h1>{{ title }}</h1>
+        <p v-if="inStock">in Stock</p>
+        <ul>
+          <p>Size</p>
+          <li v-for="sizes in size">{{ sizes }}</li>
+        </ul>
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+        <div
+          v-for="variant in variants"
+          :key="variant.id"
+          @mouseover="updateImage(variant.image)"
+          class="color-circle"
+          :style="{backgroundColor: variant.color}">
+        </div>
+        <button class="button" :disabled="!inStock" :class="{ disabledButton: !inStock }" @click="addToCart">+</button>
+        <button class="button" :disabled="!inStock" :class="{ disabledButton: !inStock }" @click="lessToCart">-</button>
+      </div>
     </div>
 
     <!-- Import Js -->
     <script src="./main.js"></script>
+    <script>
+      const mountedApp = app.mount("#app"); //#app is a div id name
+    </script>
   </body>
 </html>
